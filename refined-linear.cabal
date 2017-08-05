@@ -1,0 +1,39 @@
+-- This file has been generated from package.yaml by hpack version 0.18.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           refined-linear
+version:        0.0.0
+synopsis:       Linear algebra with static dimensions using refinement types
+homepage:       https://github.com/ttuegel/refined-linear#readme
+bug-reports:    https://github.com/ttuegel/refined-linear/issues
+build-type:     Simple
+cabal-version:  >= 1.10
+
+source-repository head
+  type: git
+  location: https://github.com/ttuegel/refined-linear
+
+flag use-int64
+  description: Use 64-bit integers in the BLAS library interface. Traditionally, BLAS uses 32-bit integers, even on 64-bit platforms. Modern BLAS implementations may optionally support 64-bit integers.
+  manual: True
+  default: False
+
+library
+  hs-source-dirs:
+      src/
+  default-extensions: RankNTypes RecordWildCards ScopedTypeVariables
+  ghc-options: -Wall
+  extra-libraries:
+      openblas
+  build-depends:
+      base
+    , primitive
+  if flag(use-int64)
+    cpp-options: -DUSE_INT64
+  exposed-modules:
+      Internal.I
+      Internal.V
+  other-modules:
+      Paths_refined_linear
+  default-language: Haskell2010

@@ -1,0 +1,32 @@
+name: refined-linear
+version: 0.0.0
+github: ttuegel/refined-linear
+synopsis: Linear algebra with static dimensions using refinement types
+
+flags:
+  use-int64:
+    manual: True
+    default: False
+    description:
+      Use 64-bit integers in the BLAS library interface.
+      Traditionally, BLAS uses 32-bit integers, even on 64-bit platforms.
+      Modern BLAS implementations may optionally support 64-bit integers.
+
+ghc-options: -Wall
+
+default-extensions:
+  - RankNTypes
+  - RecordWildCards
+  - ScopedTypeVariables
+
+dependencies:
+  - base
+  - primitive
+
+library:
+  source-dirs: src/
+  extra-libraries:
+    - openblas
+  when:
+    - condition: flag(use-int64)
+      cpp-options: -DUSE_INT64
